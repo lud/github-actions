@@ -17,6 +17,8 @@ Restores deps and _build from cache, installs dependencies, compiles them, then 
 | `elixir-version` | yes |  | Elixir version, typically from the outputs of setup-beam. |
 | `otp-version` | yes |  | Erlang/OTP version, typically from the outputs of setup-beam. |
 | `cache-version` | no | v1 | Cache key prefix. Bump this to invalidate the cache. |
+| `compile-envs` | no |  | Optional whitespace-separated list of MIX_ENV values to compile dependencies for (e.g. "dev test"). If omitted or empty, runs a single `mix deps.compile` with whatever MIX_ENV is already set in the environment.
+ |
 
 
 **Usage**

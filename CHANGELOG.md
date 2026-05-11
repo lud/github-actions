@@ -1,3 +1,8 @@
+## [1.1.0] - 2026-05-11
+
+### 🚀 Features
+
+- Allow mix deps.compile to use multiple MIX_ENV
 ## [1.0.0] - 2026-05-11
 
 ### 🚀 Features

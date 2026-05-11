@@ -27,14 +27,22 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Normalize compile-envs for cache key
+      id: cache-envs
+      shell: bash
+      run: |
+        normalized=$(echo '${{ inputs.compile-envs }}' | tr -s '[:space:]' '-' | sed 's/^-//;s/-$//')
+        echo "value=$normalized" >> "$GITHUB_OUTPUT"
+
     - name: Restore dependencies cache
       uses: actions/cache/restore@v5
       with:
         path: |
           deps
           _build
-        key: ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ hashFiles('mix.exs', 'mix.lock') }}
+        key: ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ steps.cache-envs.outputs.value }}--${{ hashFiles('mix.exs', 'mix.lock') }}
         restore-keys: |
+          ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ steps.cache-envs.outputs.value }}--
           ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--
           ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--
 
@@ -63,4 +71,4 @@ runs:
         path: |
           deps
           _build
-        key: ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ hashFiles('mix.exs', 'mix.lock') }}
+        key: ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ steps.cache-envs.outputs.value }}--${{ hashFiles('mix.exs', 'mix.lock') }}

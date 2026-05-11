@@ -23,7 +23,7 @@ Restores deps and _build from cache, installs dependencies, compiles them, then 
 
 ```yaml
 - name: Mix Dependencies
-  uses: lud/github-actions/mix-deps@v0
+  uses: lud/github-actions/mix-deps@v1
   with:
     elixir-version: ${{ steps.setup_beam.outputs.elixir-version }}
     otp-version: ${{ steps.setup_beam.outputs.otp-version }}
@@ -49,7 +49,7 @@ Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately saves 
 
 ```yaml
 - name: Run Dialyzer
-  uses: lud/github-actions/run-dialyzer@v0
+  uses: lud/github-actions/run-dialyzer@v1
   with:
     elixir-version: ${{ steps.setup_beam.outputs.elixir-version }}
     otp-version: ${{ steps.setup_beam.outputs.otp-version }}

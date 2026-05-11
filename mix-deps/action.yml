@@ -17,6 +17,12 @@ inputs:
     description: Cache key prefix. Bump this to invalidate the cache.
     required: false
     default: "v1"
+  compile-envs:
+    description: >
+      Optional whitespace-separated list of MIX_ENV values to compile dependencies
+      for (e.g. "dev test"). If omitted or empty, runs a single `mix deps.compile`
+      with whatever MIX_ENV is already set in the environment.
+    required: false
 
 runs:
   using: composite
@@ -41,7 +47,15 @@ runs:
 
     - name: Compile Dependencies
       shell: bash
-      run: mix deps.compile
+      run: |
+        envs='${{ inputs.compile-envs }}'
+        if [ -z "$envs" ]; then
+          mix deps.compile
+        else
+          for env in $envs; do
+            MIX_ENV="$env" mix deps.compile
+          done
+        fi
 
     - name: Save dependencies cache
       uses: actions/cache/save@v5

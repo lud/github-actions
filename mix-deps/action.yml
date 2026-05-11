@@ -1,0 +1,47 @@
+name: Mix Dependencies
+description: Restore deps/_build cache and install Elixir dependencies
+
+inputs:
+  otp-version:
+    description: Erlang/OTP version (from setup-beam outputs)
+    required: true
+  elixir-version:
+    description: Elixir version (from setup-beam outputs)
+    required: true
+  cache-version:
+    description: Cache version prefix
+    required: false
+    default: "v1"
+
+runs:
+  using: composite
+  steps:
+    - name: Restore dependencies cache
+      uses: actions/cache/restore@v5
+      with:
+        path: |
+          deps
+          _build
+        key: ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ hashFiles('mix.exs', 'mix.lock') }}
+        restore-keys: |
+          ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--
+          ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get --check-locked
+
+    - name: Compile Dependencies
+      shell: bash
+      run: mix deps.compile
+
+    - name: Save dependencies cache
+      uses: actions/cache/save@v5
+      with:
+        path: |
+          deps
+          _build
+        key: ${{ inputs.cache-version }}-deps-build-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ hashFiles('mix.exs', 'mix.lock') }}

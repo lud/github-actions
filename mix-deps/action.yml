@@ -1,15 +1,20 @@
 name: Mix Dependencies
-description: Restore deps/_build cache and install Elixir dependencies
+description: >
+  Restores deps and _build from cache, installs dependencies, compiles them,
+  then immediately saves the cache. The cache is saved right after this step,
+  not at the end of the workflow, so dependencies are cached even when a later
+  step fails. Useful when iterating on a CI pipeline, as you avoid recompiling
+  on every run.
 
 inputs:
   otp-version:
-    description: Erlang/OTP version (from setup-beam outputs)
+    description: Erlang/OTP version, typically from the outputs of setup-beam.
     required: true
   elixir-version:
-    description: Elixir version (from setup-beam outputs)
+    description: Elixir version, typically from the outputs of setup-beam.
     required: true
   cache-version:
-    description: Cache version prefix
+    description: Cache key prefix. Bump this to invalidate the cache.
     required: false
     default: "v1"
 

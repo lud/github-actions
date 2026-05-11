@@ -1,15 +1,20 @@
 name: Run Dialyzer
-description: Restore PLT cache and run mix dialyzer
+description: >
+  Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately
+  saves the PLT cache. The cache is saved right after this step, not at the end
+  of the workflow, so the PLT is available on the next run regardless of whether
+  later steps succeed. This can save a lot of time because PLT generation can
+  take several minutes.
 
 inputs:
   otp-version:
-    description: Erlang/OTP version (from setup-beam outputs)
+    description: Erlang/OTP version, typically from the outputs of setup-beam.
     required: true
   elixir-version:
-    description: Elixir version (from setup-beam outputs)
+    description: Elixir version, typically from the outputs of setup-beam.
     required: true
   cache-version:
-    description: Cache version prefix
+    description: Cache key prefix. Bump this to invalidate the cache.
     required: false
     default: "v1"
 

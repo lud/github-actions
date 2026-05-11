@@ -20,7 +20,7 @@ Restores deps and _build from cache, installs dependencies, compiles them, then 
 
 ### Run Dialyzer
 
-Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately saves the PLT cache. The cache is saved right after this step, not at the end of the workflow, so the PLT is available on the next run regardless of whether later steps succeed. This matters because PLT generation can take several minutes.
+Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately saves the PLT cache. The cache is saved right after this step, not at the end of the workflow, so the PLT is available on the next run regardless of whether later steps succeed. This can save a lot of time because PLT generation can take several minutes.
 
 
 **Inputs**
@@ -30,5 +30,6 @@ Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately saves 
 | `elixir-version` | yes |  | Elixir version, typically from the outputs of setup-beam. |
 | `otp-version` | yes |  | Erlang/OTP version, typically from the outputs of setup-beam. |
 | `cache-version` | no | v1 | Cache key prefix. Bump this to invalidate the cache. |
+| `plt-path` | no | _build/plts | Directory where Dialyzer stores PLT files. |
 <!-- rdmx /gha:list_actions -->
 

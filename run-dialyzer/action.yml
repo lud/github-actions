@@ -17,6 +17,10 @@ inputs:
     description: Cache key prefix. Bump this to invalidate the cache.
     required: false
     default: "v1"
+  plt-path:
+    description: Directory where Dialyzer stores PLT files.
+    required: false
+    default: "_build/plts"
 
 runs:
   using: composite
@@ -24,7 +28,7 @@ runs:
     - name: Restore PLT cache
       uses: actions/cache/restore@v5
       with:
-        path: _build/plts
+        path: ${{ inputs.plt-path }}
         key: ${{ inputs.cache-version }}-dialyzer-plts-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ hashFiles('mix.exs', 'mix.lock') }}
         restore-keys: |
           ${{ inputs.cache-version }}-dialyzer-plts-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--
@@ -37,5 +41,5 @@ runs:
     - name: Save PLT cache
       uses: actions/cache/save@v5
       with:
-        path: _build/plts
+        path: ${{ inputs.plt-path }}
         key: ${{ inputs.cache-version }}-dialyzer-plts-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ hashFiles('mix.exs', 'mix.lock') }}

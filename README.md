@@ -18,6 +18,18 @@ Restores deps and _build from cache, installs dependencies, compiles them, then 
 | `otp-version` | yes |  | Erlang/OTP version, typically from the outputs of setup-beam. |
 | `cache-version` | no | v1 | Cache key prefix. Bump this to invalidate the cache. |
 
+
+**Usage**
+
+```yaml
+- name: Mix Dependencies
+  uses: lud/github-actions/mix-deps@v0
+  with:
+    elixir-version: ${{ steps.setup_beam.outputs.elixir-version }}
+    otp-version: ${{ steps.setup_beam.outputs.otp-version }}
+    cache-version: ${{ env.CACHE_VERSION }}
+```
+
 ### Run Dialyzer
 
 Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately saves the PLT cache. The cache is saved right after this step, not at the end of the workflow, so the PLT is available on the next run regardless of whether later steps succeed. This can save a lot of time because PLT generation can take several minutes.
@@ -30,6 +42,18 @@ Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately saves 
 | `elixir-version` | yes |  | Elixir version, typically from the outputs of setup-beam. |
 | `otp-version` | yes |  | Erlang/OTP version, typically from the outputs of setup-beam. |
 | `cache-version` | no | v1 | Cache key prefix. Bump this to invalidate the cache. |
-| `plt-path` | no | _build/plts | Directory where Dialyzer stores PLT files. |
+| `plt-dir` | no | _build/plts | Directory where Dialyzer stores PLT files. |
+
+
+**Usage**
+
+```yaml
+- name: Run Dialyzer
+  uses: lud/github-actions/run-dialyzer@v0
+  with:
+    elixir-version: ${{ steps.setup_beam.outputs.elixir-version }}
+    otp-version: ${{ steps.setup_beam.outputs.otp-version }}
+    cache-version: ${{ env.CACHE_VERSION }}
+```
 <!-- rdmx /gha:list_actions -->
 

@@ -1,0 +1,4 @@
+with:
+  otp-version: "${{ steps.setup_beam.outputs.otp-version }}"
+  elixir-version: "${{ steps.setup_beam.outputs.elixir-version }}"
+  cache-version: "${{ env.CACHE_VERSION }}"

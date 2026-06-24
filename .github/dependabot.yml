@@ -9,9 +9,7 @@ updates:
   - package-ecosystem: mix
     directory: /
     schedule:
-      interval: daily
-      timezone: Europe/Paris
-      time: "06:00"
+      interval: weekly
     commit-message:
       prefix: "chore(deps)"
     open-pull-requests-limit: 1

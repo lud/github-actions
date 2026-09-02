@@ -34,7 +34,7 @@ Restores deps and _build from cache, installs dependencies, compiles them, then 
 
 ### Run Dialyzer
 
-Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately saves the PLT cache. The cache is saved right after this step, not at the end of the workflow, so the PLT is available on the next run regardless of whether later steps succeed. This can save a lot of time because PLT generation can take several minutes.
+Restores the Dialyzer PLT from cache, builds or updates it if needed, saves the PLT cache, then runs mix dialyzer. The cache is saved before the analysis runs, so the PLT is available on the next run even when dialyzer reports warnings. This can save a lot of time because PLT generation can take several minutes.
 
 
 **Inputs**

@@ -1,10 +1,10 @@
 name: Run Dialyzer
 description: >
-  Restores the Dialyzer PLT from cache, runs mix dialyzer, then immediately
-  saves the PLT cache. The cache is saved right after this step, not at the end
-  of the workflow, so the PLT is available on the next run regardless of whether
-  later steps succeed. This can save a lot of time because PLT generation can
-  take several minutes.
+  Restores the Dialyzer PLT from cache, builds or updates it if needed, saves
+  the PLT cache, then runs mix dialyzer. The cache is saved before the analysis
+  runs, so the PLT is available on the next run even when dialyzer reports
+  warnings. This can save a lot of time because PLT generation can take
+  several minutes.
 
 inputs:
   otp-version:
@@ -26,6 +26,7 @@ runs:
   using: composite
   steps:
     - name: Restore PLT cache
+      id: restore-cache
       uses: actions/cache/restore@v5
       with:
         path: ${{ inputs.plt-dir }}
@@ -34,12 +35,17 @@ runs:
           ${{ inputs.cache-version }}-dialyzer-plts-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--
           ${{ inputs.cache-version }}-dialyzer-plts-${{ runner.os }}--${{ inputs.otp-version }}--
 
-    - name: Run dialyzer
+    - name: Build PLT
       shell: bash
-      run: mix dialyzer --halt-exit-status
+      run: mix dialyzer --plt
 
     - name: Save PLT cache
+      if: steps.restore-cache.outputs.cache-hit != 'true'
       uses: actions/cache/save@v5
       with:
         path: ${{ inputs.plt-dir }}
         key: ${{ inputs.cache-version }}-dialyzer-plts-${{ runner.os }}--${{ inputs.otp-version }}--${{ inputs.elixir-version }}--${{ hashFiles('mix.exs', 'mix.lock') }}
+
+    - name: Run dialyzer
+      shell: bash
+      run: mix dialyzer --no-check --halt-exit-status

@@ -1,7 +1,7 @@
 %{
-  "cli_mate": {:hex, :cli_mate, "0.10.2", "ddde446045cd6bb442daf77f0eb23836b66d8e4fc469cd0e09c7ccbe9036b72f", [:mix], [], "hexpm", "8b9f6c3e1ac240ac0f18fa3ad033dd5cabc4061c7234b1bdca35536dccc09af5"},
+  "cli_mate": {:hex, :cli_mate, "0.11.0", "360ec19530ac15a93825191989e73ece2cc4b8a961478a766b8135cea36e4eb4", [:mix], [], "hexpm", "72e49fa51a4f0a6b1fe81ecc381488e116b546e9f9ef6d0af7dc91f945a8c11e"},
   "nimble_options": {:hex, :nimble_options, "1.1.1", "e3a492d54d85fc3fd7c5baf411d9d2852922f66e69476317787a7b2bb000a61b", [:mix], [], "hexpm", "821b2470ca9442c4b6984882fe9bb0389371b8ddec4d45a9504f00a66f650b44"},
-  "readmix": {:hex, :readmix, "0.8.1", "ab3a5d5b92b1fccc4bb724b298287947c801cf34c2d7ba72a4bbc38d754cb8d5", [:mix], [{:cli_mate, "~> 0.10", [hex: :cli_mate, repo: "hexpm", optional: false]}, {:nimble_options, "~> 1.0", [hex: :nimble_options, repo: "hexpm", optional: false]}], "hexpm", "b1f8f0b7e35871a0d93a57cf54afe0030c025942543f21e65e36063cdc3fd970"},
+  "readmix": {:hex, :readmix, "0.8.2", "0b4c0498f69aa9c0bef0351f146c8deb3000156cd14bbcb26e205f25b273733e", [:mix], [{:cli_mate, "~> 0.10", [hex: :cli_mate, repo: "hexpm", optional: false]}, {:nimble_options, "~> 1.0", [hex: :nimble_options, repo: "hexpm", optional: false]}], "hexpm", "49e3bf1810ea424f7224ff9202e8ee2559081e2a725bfd5ce61cc20052f25c23"},
   "yamerl": {:hex, :yamerl, "0.10.0", "4ff81fee2f1f6a46f1700c0d880b24d193ddb74bd14ef42cb0bcf46e81ef2f8e", [:rebar3], [], "hexpm", "346adb2963f1051dc837a2364e4acf6eb7d80097c0f53cbdc3046ec8ec4b4e6e"},
   "yaml_elixir": {:hex, :yaml_elixir, "2.12.2", "9dd1330fb4cd9a36a7b0f502e5b12486eff632792ee4a5f0eba52a4d4ec32c9c", [:mix], [{:yamerl, "~> 0.10", [hex: :yamerl, repo: "hexpm", optional: false]}], "hexpm", "e7c1b10122f973e6558462d51c39026ba0e14afbc6745318e990ea82cfe9e159"},
 }
